@@ -72,6 +72,51 @@ ouvrir localhost:8000/admin/ avec le login fourni à la commande createsuperuser
 - réponse
 ## exposing with django-rest-framework ##
 
+django-rest-framework, il nous faut créer l'api que notre application va utiliser
+pour afficher les question posée. Nous allons implémenter la première qui récupère la liste des questions.
+
+Il nous faut implémenter 2 choses, un Serializer (transforme les objects accessible par l'API ici le modèle Question, en dictionnaire python et inversement), et une classe de vue surchargeant la class APIView, qui transforme ce dictionnaire en format demandé, sur une route donnée.
+
+django-rest-framework fournit des supers classes qui marchent *très* bien avec les modèles djangos (et pour cause..)
+
+```python
+from rest_framework import serializers
+from .models import Question
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ('slug', 'created', 'question')
+
+```
+
+pour les vues, ajouter la classe QuestionListView dans le views.py de l'applicatoin.
+Nous allons utiliser la class ListCreateAPIView, qui permet de lister, et de créer un nouveau modèle (via POST).
+
+```python
+
+from rest_framework import generics
+from .serializers import QuestionSerializer
+from .models import Question
+
+class QuestionListView(generics.ListCreateAPIView):
+    model = Question
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+
+```
+
+rajoutons la vue ainsi crée dans les urls.
+```
+urlpatterns = patterns('',
+                       url(r'^$', QuestionListView.as_view(), name='question-list'),
+                       )
+
+dans le main urls   
+ url(r'^q/', include('questions.urls'),
+```
+
+
 ## ajouter des exemples, et tester ##
 
 # Frontend #

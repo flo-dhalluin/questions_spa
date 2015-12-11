@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .serializers import QuestionSerializer
+from .models import Question
 
-# Create your views here.
+class QuestionListView(generics.ListCreateAPIView):
+    model = Question
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
