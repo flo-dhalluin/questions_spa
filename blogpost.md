@@ -113,11 +113,14 @@ urlpatterns = patterns('',
                        )
 
 dans le main urls   
- url(r'^q/', include('questions.urls'),
+ url(r'^q/', include('questions.urls')),
 ```
 
-
 ## ajouter des exemples, et tester ##
+
+    curl http://localhost:8000/q/  -> un bon json de la liste des questions !
+
+
 
 # Frontend #
 
