@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib import staticfiles
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^q/', include('questions.urls')),
+    url(r'^q/', include('questions.urls')),    
+    url(r'^$', staticfiles.views.serve, kwargs={"path":"index.html"}),
+
 ]

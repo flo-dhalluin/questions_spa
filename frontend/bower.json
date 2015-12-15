@@ -1,0 +1,12 @@
+{
+  "name": "frontend",
+  "description": "",
+  "main": "index.html",
+  "license": "ISC",
+  "homepage": "https://github.com/flo-dhalluin/questions_spa",
+  "moduleType": [],
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.2.0"
+  }
+}

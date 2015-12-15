@@ -118,18 +118,55 @@ dans le main urls
 
 ## ajouter des exemples, et tester ##
 
-    curl http://localhost:8000/q/  -> un bon json de la liste des questions !
 
+   curl http://localhost:8000/q/  -> un bon json de la liste des questions ! YAY
 
 
 # Frontend #
 
-## boilerplate et installation
 
-- création du dossier /frontend/
-- bower gulp
-- gulp compile -> /static/
-- servir par défault index.html:
+## le début 
+Ok, curl n'est pas vraiment user friendly, et puis je vous ai alleché avec Polymer.
+
+L'idée d'une single page app est de vraiment découpler le frontend de la partie api.
+
+On va donc coder notre appli web dans un dossier séparé, appellons le au hasard, "frontend"
+dans ce dossier :
+
+     > npm init
+     > npm install bower gulp --save-dev
+     > bower install --save Polymer/polymer#^1.2.0
+
+on va créer notre page d'index vide avec dedans, attention :
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Django Question SinglePage </title>
+    <script src="static/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  </head>
+
+  <body>
+    <h1> It works </h1>
+  </body>
+</html>
+```
+
+et la servir en ajoutant à question_spa\urls.py, la vue :
 ```python
   url(r'^$', staticfiles.views.serve, kwargs={"path":"index.html"}),
 ```
+
+et spécifer à django que des fichiers statiques se trouvent dans ledit dossier frontend en ajoutant à settings.py :
+```
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "frontend"),
+]
+```
+
+vas'y, va voir un peu sur localhost:8000, c'est bon ? 
+
+## notre premier element polymer, une liste de question
+
+## gulp ! 
+
