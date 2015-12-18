@@ -168,5 +168,84 @@ vas'y, va voir un peu sur localhost:8000, c'est bon ?
 
 ## notre premier element polymer, une liste de question
 
+Nous allons a présent afficher la liste des questions au lieu de notre message pas vraiment informatif.
+
+Nous allons pour cela créer un élément Polymer correspondant à une liste de question.
+
+créons le dossier frontend/elements/ qui contiendra nos éléments polymer
+et le fichier frontend/elements/question-list.html
+
+```html
+
+<link rel="import"
+      href="/static/bower_components/polymer/polymer.html">
+<link rel="import"
+      href="/static/bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="question-list">
+  <template>
+    
+    <h1> Questions </h1>
+    
+    <!-- hardcoded url to our REST api view
+         the result of the query is bound to this component "questions" variable -->
+    <iron-ajax
+       auto
+       url="/q/"
+       handle-as="json"
+       last-response="{{questions}}"
+       debounce-duration="300">
+    </iron-ajax>
+
+    <ul>
+    <template is="dom-repeat" items="[[questions]]">
+	<li>
+	  {{item.question}}
+	</li>
+    </template>
+    </ul>
+  </template>
+  
+  <script>
+      Polymer({
+      is:"question-list",
+      ready: function() {
+         this.questions = []; /* start empty */
+         console.log("hello le monde, ici question-list");
+      },
+      });
+      
+  </script>
+</dom-module>
+```
+
+Nous constatons que notre élément réutilise un élément existant, qui fait partie de polymer : iron-ajax qui nous permet de faire une requête ajax. Les éléments de la collection "iron" sont des éléments de base. Nous verrons plus tard la collection "material" qui permet de styler. 
+nous l'installons avec bower :
+
+	bower install --save PolymerElements/iron-ajax
+
+
+
+nous modifions le fichier index.html pour afficher l'élément
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Django Question SinglePage </title>
+    <script src="static/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+	<!-- on importe notre nouvel élément ici : -->
+    <link rel="import" href="static/elements/question-list.html">
+
+  </head>
+
+  <body>
+	<!-- coucou toi ! -->
+    <question-list></question-list>
+  </body>
+</html>
+```
+
+Allez, on lance un petit runserver, et on ouvre la page / .. go, ouvre les outils de débug et vérifie que le message "hello le monde" apparaît dans la console et qu'on a effectivement une requête ajax vers /q/ ! 
+
 ## gulp ! 
 

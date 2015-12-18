@@ -1,0 +1,40 @@
+<link rel="import"
+      href="/static/bower_components/polymer/polymer.html">
+<link rel="import"
+      href="/static/bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="question-list">
+  <template>
+    
+    <h1> Questions </h1>
+    
+    <!-- hardcoded url to our REST api view
+         the result of the query is bound to this component "questions" variable -->
+    <iron-ajax
+       auto
+       url="/q/"
+       handle-as="json"
+       last-response="{{questions}}"
+       debounce-duration="300">
+    </iron-ajax>
+
+    <ul>
+    <template is="dom-repeat" items="[[questions]]">
+	<li>
+	  {{item.question}}
+	</li>
+    </template>
+    </ul>
+  </template>
+  
+  <script>
+      Polymer({
+      is:"question-list",
+      ready: function() {
+         this.questions = []; /* start empty */
+         console.log("hello le monde, ici question-list");
+      },
+      });
+      
+  </script>
+</dom-module>
