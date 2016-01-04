@@ -278,6 +278,17 @@ modifions index.html
 
 là, c'est tout joli avec une belle barre d'outils, tout occupe bien l'écran.
 
+## Poser une question
+
+La vue générique ListeCreateAPIView de rest-framework expose normalement 2 api. Une répondant au requête de type GET, qui liste les instances existantes et une répondant aux requêtes POST qui permet de créer une nouvelle instance. Testons :
+
+```
+curl -X POST -d question="Est-ce que ça marche" http://localhost:8000/q/
+```
+
+Vérifions sur notre navigateur web, une nouvelle question a bien été prise en compte !
+
+
 
 ## gulp ! 
 

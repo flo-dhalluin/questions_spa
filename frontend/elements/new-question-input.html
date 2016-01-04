@@ -1,0 +1,44 @@
+<link rel="import"
+      href="/static/bower_components/polymer/polymer.html">
+<link rel="import"
+      href="/static/bower_components/iron-form/iron-form.html">
+<link rel="import"
+      href="/static/bower_components/paper-input/paper-input.html">
+
+<dom-module id="new-question-input">
+  <template>
+    <form is="iron-form"
+	  id="form"
+	  action="/q/"
+	  contentType="application/json"
+	  on-iron-form-response="_onResponse"
+	  method="POST">
+      <!-- some dark magic : iron-form listens for its kids change (like if you press 
+           enter on the last input element ... -->
+      <paper-input id="qInput"
+		   name="question"
+		   label="Entrez votre question ici..."
+		   no-label-float
+		   value="{{newQuestion}}">
+		   
+      </paper-input>
+    </form>
+  </template>
+
+  <script>
+
+    Polymer({
+      is:"new-question-input",
+      ready: function() {
+        this.newQuestion="";
+    },
+    
+    _onResponse: function(e) {
+    if(e.detail.status === 201) {
+      this.fire('question-created', e.detail.response);
+      this.newQuestion = "";
+    }
+    }
+    });
+  </script>
+</dom-module>
