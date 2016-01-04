@@ -288,6 +288,96 @@ curl -X POST -d question="Est-ce que ça marche" http://localhost:8000/q/
 
 Vérifions sur notre navigateur web, une nouvelle question a bien été prise en compte !
 
+Nous allons nous occuper de la partie client pour attaquer cette API. Créeons un nouvel élément polymer : frontend/elements/new-question-input.html, qui est en gros un formulaire html. les formulaires sont tellement mieux quand il sont iron- la partie ajax est déjà faite !
+
+On va utiliser un element paper-input pour entrer la nouvel question, c'est déjà stylé !
+
+```html
+<link rel="import"
+      href="/static/bower_components/polymer/polymer.html">
+<link rel="import"
+      href="/static/bower_components/iron-form/iron-form.html">
+<link rel="import"
+      href="/static/bower_components/paper-input/paper-input.html">
+
+<dom-module id="new-question-input">
+  <template>
+    <form is="iron-form"
+	  id="form"
+	  action="/q/"
+	  contentType="application/json"
+	  on-iron-form-response="_onResponse"
+	  method="POST">
+      <!-- some dark magic : iron-form listens for its kids change (like if you press 
+           enter on the last input element ... -->
+      <paper-input id="qInput"
+		   name="question"
+		   label="Entrez votre question ici..."
+		   no-label-float
+		   value="{{newQuestion}}">
+		   
+      </paper-input>
+    </form>
+  </template>
+
+  <script>
+
+    Polymer({
+      is:"new-question-input",
+      ready: function() {
+        this.newQuestion="";
+    },
+    
+    _onResponse: function(e) {
+	// Une fois que le serveur nous a répondu, on lance un évenement pour signaler la création!
+    if(e.detail.status === 201) {
+      this.fire('question-created', e.detail.response);
+      this.newQuestion = "";
+    }
+    }
+    });
+  </script>
+</dom-module>
+```
+
+Il nous faut rajouter ce nouvel élément à la page, on va l'ajouter dans l'élément existant questions-list, en n'oubliant de rattraper l'évenement "question-created", qui sera lancé dès qu'une nouvelle question est envoyée :
+
+frontend/elements/question-list.html
+```html
+......
+<link rel="import"
+      href="new-question-input.html">
+......
+<dom-module id="question-list">
+  <template>
+    <iron-ajax
+       auto
+       url="/q/"
+       handle-as="json"
+       last-response="{{questions}}"
+       debounce-duration="300">
+    </iron-ajax>
+    <!-- hardcoded url to our REST api view
+         the result of the query is bound to this component "questions" variable -->      
+
+
+    <new-question-input on-question-created="_newQuestion"></new-question-input>
+
+	<paper-listbox>
+      <template is="dom-repeat" items="[[questions]]">
+
+        .....
+
+      _newQuestion: function(q) {
+         /* this puts the new element at the beggining of the array */
+         this.unshift('questions', q.detail);
+      }
+      });
+      
+  </script>
+</dom-module>
+
+```
 
 
 ## gulp ! 
