@@ -2,14 +2,19 @@
       href="/static/bower_components/polymer/polymer.html">
 <link rel="import"
       href="/static/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import"
+      href="/static/bower_components/paper-item/paper-item.html">
+<link rel="import"
+      href="/static/bower_components/paper-item/paper-item-body.html">
+<link rel="import"
+      href="/static/bower_components/paper-listbox/paper-listbox.html">
+<link rel="import"
+      href="/static/bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import"
+      href="/static/bower_components/paper-toolbar/paper-toolbar.html">
 
 <dom-module id="question-list">
   <template>
-    
-    <h1> Questions </h1>
-    
-    <!-- hardcoded url to our REST api view
-         the result of the query is bound to this component "questions" variable -->
     <iron-ajax
        auto
        url="/q/"
@@ -17,14 +22,18 @@
        last-response="{{questions}}"
        debounce-duration="300">
     </iron-ajax>
+    <!-- hardcoded url to our REST api view
+         the result of the query is bound to this component "questions" variable -->      
 
-    <ul>
-    <template is="dom-repeat" items="[[questions]]">
-	<li>
-	  {{item.question}}
-	</li>
-    </template>
-    </ul>
+    <paper-listbox>
+      <template is="dom-repeat" items="[[questions]]">
+	<paper-item>
+	  <paper-item-body>
+	    {{item.question}}
+	  </paper-item-body>
+	</paper-item>
+      </template>
+    </paper-listbox>
   </template>
   
   <script>

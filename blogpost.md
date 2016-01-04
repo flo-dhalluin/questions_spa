@@ -247,5 +247,37 @@ nous modifions le fichier index.html pour afficher l'élément
 
 Allez, on lance un petit runserver, et on ouvre la page / .. go, ouvre les outils de débug et vérifie que le message "hello le monde" apparaît dans la console et qu'on a effectivement une requête ajax vers /q/ ! 
 
+## stylage et utilisation des elements paper
+
+installons les éléments iron-flex-layout (pour faire un layout à base de flexbox, penser grille css mais en mieux..), et les éléments paper necessaires.
+
+```
+bower install --save PolymerElements/iron-flex-layout
+bower install --save PolymerElements/paper-toolbar
+bower install PolymerElements/paper-header-panel
+```
+
+modifions index.html
+```
+    <link rel="import"
+      href="/static/bower_components/paper-header-panel/paper-header-panel.html">
+    <link rel="import"
+	  href="/static/bower_components/paper-toolbar/paper-toolbar.html">
+
+  </head>
+
+  <body class="layout fullbleed vertical">
+    <paper-header-panel class="flex">
+      <paper-toolbar>
+	<div> Questions </div>
+      </paper-toolbar>
+      <question-list></question-list>
+    </paper-header-panel>
+  </body>
+```
+
+là, c'est tout joli avec une belle barre d'outils, tout occupe bien l'écran.
+
+
 ## gulp ! 
 
