@@ -1,7 +1,10 @@
 from django.contrib import admin
 from .models import Question
-# Register your models here.
+from .models import Answer
+
+class AnswerInline(admin.StackedInline):
+    model = Answer
 
 @admin.register(Question)
 class QuestionModelAdmin(admin.ModelAdmin):
-    pass
+    inlines = [AnswerInline]

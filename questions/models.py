@@ -25,3 +25,11 @@ class Question(models.Model):
 
     def __str__(self):
         return "Question : %s"%self.slug
+
+
+class Answer(models.Model):
+    
+    question = models.ForeignKey(Question, related_name='answers')
+    text = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
