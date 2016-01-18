@@ -4,7 +4,7 @@
 
 npm
 virtualenv
-pip install django-rest-framework
+pip install djangorestframework
 django-admin startproject questions_spa
 
 
@@ -382,3 +382,22 @@ frontend/elements/question-list.html
 
 ## gulp ! 
 
+boof.
+
+
+# les réponses
+C'est pas tout ça de pouvoir poser des questions, ça serait chouette aussi de pouvoir poster des
+réponses.
+
+- création du modèle "Answer"
+- serialiser, et serialiser la relation
+- admin ..  (ajouter un admin.StackedInline pour ajouter des données sympas)
+- endpoint 
+
+# frontend
+
+nous devons maintenant créer plusieurs pages. utilisons pour cela page.js
+- bower install --save visionmedia/page.js
+- elements/routing.html
+- iron-pages
+- elements/question-details.html, element, fetching a questions'details with iron-ajax
