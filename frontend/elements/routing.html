@@ -1,0 +1,30 @@
+<script src="../bower_components/page/page.js"></script>
+
+<script>
+  window.addEventListener('WebComponentsReady', function() {
+
+     // shameless copypasta from PSK
+    // Removes end / from app.baseUrl which page.base requires for production
+    if (window.location.port === '') {  // if production
+      page.base(app.baseUrl.replace(/\/$/, ''));
+    }
+
+    page('/', function() {
+      app.route = 'home';
+    });
+    page(app.baseUrl, function() {
+      app.route = 'home';
+    });
+   
+    page('/q/:question_slug', function(data) {
+     app.route = 'question';
+     app.question_id = data.params.question_slug;
+     console.log(app.question_id);
+    });
+   
+    // add #! before urls
+    page({
+      hashbang: true
+   });
+   })
+</script>

@@ -36,7 +36,7 @@
       <template is="dom-repeat" items="[[questions]]">
 	<paper-item>
 	  <paper-item-body>
-	    {{item.question}}
+	    <a href="{{baseUrl}}/q/{{item.slug}}"> {{item.question}} </a>
 	  </paper-item-body>
 	</paper-item>
       </template>
