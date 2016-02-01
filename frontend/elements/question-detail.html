@@ -5,6 +5,10 @@
 <link rel="import"
       href="/static/bower_components/paper-material/paper-material.html">
 
+<link rel="import"
+      href="new-answer-input.html">
+
+
 <dom-module id="question-detail">
   <template>
     <iron-ajax
@@ -21,6 +25,10 @@
     <h3> {{ question.question}} <h3>
     <span class="question-date"> {{ question.created }} </span>
       
+
+    <new-answer-input on-answer-created="_onNewAnswer"
+		      slug="[[question.slug]]">
+    </new-answer-input>
     
     <template is="dom-repeat" items="[[question.answers]]">
       <paper-material elevation="2">
@@ -48,7 +56,11 @@
      
      getUrl: function(qslug) {
        return "/q/question/" + qslug;
-       }
+      },
+      _onNewAnswer: function(a) {
+      // fired whenever the user "entered" a new answer ! 
+      this.unshift('question.answers', a.detail);
+      },
       });
       
   </script>
